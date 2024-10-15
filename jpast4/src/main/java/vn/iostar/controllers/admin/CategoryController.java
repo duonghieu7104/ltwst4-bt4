@@ -19,7 +19,7 @@ import vn.iostar.service.impl.CategoryServiceImpl;
 import vn.iostar.utils.Constant;
 
 @MultipartConfig()
-@WebServlet(urlPatterns = { "/admin/categories", "/admin/category/add", "/admin/category/insert", "/admin/category/edit", "/admin/category/update", "/admin/category/delete" })
+@WebServlet(urlPatterns = { "/views", "/admin/categories", "/admin/category/add", "/admin/category/insert", "/admin/category/edit", "/admin/category/update", "/admin/category/delete" })
 public class CategoryController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -29,20 +29,20 @@ public class CategoryController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String url = req.getRequestURI();
 
-        if (url.contains("/admin/categories")) {
+        if (url.contains("/views")) {
             List<Category> list = cateService.findAll();
             req.setAttribute("listcate", list);
-            req.getRequestDispatcher("/views/admin/category-list.jsp").forward(req, resp);
+            req.getRequestDispatcher("/view/admin/category-list.jsp").forward(req, resp);
 
         } else if (url.contains("/admin/category/add")) {
-            req.getRequestDispatcher("/views/admin/category-add.jsp").forward(req, resp);
+            req.getRequestDispatcher("/view/admin/category-add.jsp").forward(req, resp);
 
         } else if (url.contains("/admin/category/edit")) {
             try {
                 int id = Integer.parseInt(req.getParameter("id"));
                 Category category = cateService.findById(id);
                 req.setAttribute("cate", category);
-                req.getRequestDispatcher("/views/admin/category-edit.jsp").forward(req, resp);
+                req.getRequestDispatcher("/view/admin/category-edit.jsp").forward(req, resp);
             } catch (NumberFormatException e) {
                 e.printStackTrace();
                 resp.sendRedirect(req.getContextPath() + "/admin/categories");
